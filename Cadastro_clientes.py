@@ -118,40 +118,9 @@ class Funcs():
             self.listcli.insert("", END, value=i)
             self.limpa_tela
         self.desconecta_bd()
+    
 
-class Relatorios():
-    def printCliente(self):
-        os.system("open cliente.pdf")    
-    def geraRelatorioCliente(self):
-        self.gerarelatorio = canvas.Canvas("cliente.pdf")
-        self.codigoRel = self.codigo_entry.get()
-        self.nomeRel = self.nome_entry.get()
-        self.telefoneRel = self.telefone_entry.get()
-        self.cidadeRel = self.cidade_entry.get()
-
-        self.gerarelatorio.setFont("Helvetica-Bold", 24)
-        self.gerarelatorio.drawString(200, 790, 'Ficha do Cliente') 
-        self.gerarelatorio.setFont("Helvetica-Bold",18)
-        self.gerarelatorio.drawString(50, 700 ,'Código: ')
-        self.gerarelatorio.drawString(50, 670 ,'Nome: ' )
-        self.gerarelatorio.drawString(50, 630 ,'Telefone: ')
-        self.gerarelatorio.drawString(50, 600 ,'Cidade: ')
-
-        self.gerarelatorio.setFont("Helvetica-Bold",14)
-        self.gerarelatorio.drawString(150, 700, self.codigoRel)
-        self.gerarelatorio.drawString(150, 670, self.nomeRel)
-        self.gerarelatorio.drawString(150, 630, self.telefoneRel)
-        self.gerarelatorio.drawString(150, 600, self.cidadeRel)
-
-
-        self.gerarelatorio.rect(20, 540, 500, 200 ,fill=False , stroke=True)
-
-        self.gerarelatorio.showPage() 
-        self.gerarelatorio.save() 
-
-        self.printCliente()
-
-class application(Funcs, Relatorios):
+class application(Funcs):
     def __init__(self):
         self.root = root
         self.tela()
@@ -160,7 +129,6 @@ class application(Funcs, Relatorios):
         self.lista_frame_2()
         self.montaTablelas()
         self.select_lista()
-        self.Menus()
         root.mainloop()
 
 
@@ -189,19 +157,19 @@ class application(Funcs, Relatorios):
             'font': ('verdana', 10, 'bold')  
         }
 
-        self.bt_limpar = Button(self.frame_1, text="Limpar", command=self.limpa_tela, **button_style)
+        self.bt_limpar = Button(self.frame_1, text="LIMPAR", command=self.limpa_tela, **button_style)
         self.bt_limpar.place(relx=0.22, rely=0.05, relwidth=0.10, relheight=0.10)
 
-        self.bt_buscar = Button(self.frame_1, text="Buscar", command=self.busca_cliente, **button_style)
+        self.bt_buscar = Button(self.frame_1, text="BUSCAR", command=self.busca_cliente, **button_style)
         self.bt_buscar.place(relx=0.32, rely=0.05, relwidth=0.10, relheight=0.10)
 
-        self.bt_alterar = Button(self.frame_1, text="Alterar", command=self.altera, **button_style)
+        self.bt_alterar = Button(self.frame_1, text="ALTERAR", command=self.altera, **button_style)
         self.bt_alterar.place(relx=0.58, rely=0.05, relwidth=0.10, relheight=0.10)
 
-        self.bt_novo = Button(self.frame_1, text="Novo", command=self.add_clientes, **button_style)
+        self.bt_novo = Button(self.frame_1, text="INSERIR", command=self.add_clientes, **button_style)
         self.bt_novo.place(relx=0.68, rely=0.05, relwidth=0.10, relheight=0.10)
 
-        self.bt_apagar = Button(self.frame_1, text="Apagar", command=self.delete_cliente, **button_style)
+        self.bt_apagar = Button(self.frame_1, text="APAGAR", command=self.delete_cliente, **button_style)
         self.bt_apagar.place(relx=0.78, rely=0.05, relwidth=0.10, relheight=0.10)
 
         label_style = {
@@ -256,23 +224,6 @@ class application(Funcs, Relatorios):
         self.listcli.column("#4", width=125)
 
         self.listcli.bind("<Double-1>", self.OnDoubleclick)
-
-    def Menus(self):
-        menubar = Menu(self.root)
-        self.root.config(menu=menubar)
-        menu01 = Menu(menubar) 
-        menu02 = Menu(menubar)
-
-        def Quit():
-            self.root.destroy()
-        
-        menubar.add_cascade(label="opões", menu= menu01)
-        menubar.add_cascade(label= "Salva PDF", menu= menu02)
-
-        menu01.add_command(label="Sair", command=Quit)
-        menu01.add_command(label="Limpa Cliente", command=self.limpa_tela)
-
-        menu02.add_command(label="Salva PDF", command=self.geraRelatorioCliente)
 
 
 application()
